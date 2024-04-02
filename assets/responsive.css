@@ -2,6 +2,11 @@
 	:root {
 		font-size: 58.5%;
 	}
+	
+	#trailerSection > iframe {
+		width: 100%;
+		height: 50vh;
+	}
 }
 
 @media only screen and (max-width: 930px) {
@@ -19,6 +24,10 @@
 
 	.hero-text-container button a {
 		font-size: 1.8rem;
+	}
+
+	.movie-side-info {
+		width: 50%;
 	}
 }
 
@@ -49,6 +58,12 @@
 		margin-bottom: 0;
 	}
 
+	.media-details-section {
+		flex-direction: column;
+		/* align-items: center; */
+	}
+
+	
 }
 
 @media screen and (max-width: 650px) {
@@ -150,13 +165,8 @@
 
 	.movie-side-info {
 		width: 100%;
-		padding: 3rem;
 	}
 
-	.media-details-section {
-		flex-direction: column;
-		
-	}
 }
 
 @media screen and (max-width: 450px) {

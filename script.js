@@ -16,7 +16,7 @@ const getApiUrl = (category) =>
 const urlParams = new URLSearchParams(window.location.search);
 const genreId = urlParams.get('id');
 const movieId = urlParams.get('movieId');
-const MOVIE_DETAIL_URL = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos`;
+const MOVIE_DETAIL_URL = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos,casts`;
 const genres = [
 	{
 		id: 28,
@@ -340,12 +340,40 @@ const getGenres = (genrelist, sep = " ") => {
 		return spanArray.join(sep);
 }
 
+const getCasts = (castList) => {
+	const newCastList = [];
+	for(let i = 0; i < castList.length && i< 10; i++) {
+		const {name} = castList[i];
+		newCastList.push(name);
+	}
+
+	return newCastList.join(', ');
+}
+
+const getDirectors = (crewList) => {
+	const directors = crewList.filter(({job}) => job === "Director");
+
+	const directorList = [];
+	for(const {name} of directors) directorList.push(name);
+	
+	return directorList.join(", ");
+}
+
+const getProductionCompanies = (productionList) => {
+	const newProductionList = [];
+	for(let i = 0; i < productionList.length && i< 4; i++) {
+		const {name} = productionList[i];
+		newProductionList.push(name);
+	}
+
+	return newProductionList.join(", ");
+}
+
 const getMovieDetails = (async (url) => {
 	const resp = await fetch(url);
 	const respData = await resp.json();	
 
-	const {original_title, original_language, overview, runtime, release_date, vote_average, poster_path, backdrop_path, videos, genres} = respData;
-
+	const {original_title, original_language, overview, runtime, release_date, vote_average, poster_path, backdrop_path, videos, genres, production_companies, casts: {cast, crew}} = respData;
 	let videoKey = '';
 	Array.from(videos.results).forEach((video) => {
 		video.type === 'Trailer' ? videoKey = video.key : "error";
@@ -354,10 +382,10 @@ const getMovieDetails = (async (url) => {
 	trailerSection.style.background = `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)), url( https://image.tmdb.org/t/p/original/${backdrop_path})`;
 	trailerSection.style.backgroundSize = "cover";
 	trailerSection.style.backgroundPosition = "center";
-	// trailerSection.innerHTML = `
-	// 	<iframe src="https://www.youtube.com/embed/${videoKey}?&theme=dark&color=white&rel=0" frameborder="0 allowfullscreen="1" loading="lazy"> 
-	// 	</iframe>
-	// `
+	trailerSection.innerHTML = `
+		<iframe src="https://www.youtube.com/embed/${videoKey}?&theme=dark&color=white&rel=0" frameborder="0 allowfullscreen="1" loading="lazy"> 
+		</iframe>
+	`
 	mediaDetailsSection.innerHTML = `
 	<div class="movie-info" id="movieInfo">
 	<h2>${original_title}</h2>
@@ -419,9 +447,9 @@ const getMovieDetails = (async (url) => {
 		
 				<ul>
 					<li><strong>Initial release: </strong> ${release_date}</li>
-					<li><strong>Director:</strong> Carles Torras</li>
-					<li><strong>Production:</strong> digiflex</li>
-					<li><strong>Screenplay:</strong> Carles Torras</li>
+					<li><strong>Directed by:</strong>${getDirectors(crew)}</li>
+					<li><strong>Production:</strong> ${getProductionCompanies(production_companies)}</li>
+					<li><strong>Starring:</strong> ${getCasts(cast)}</li>
 				</ul>
 				</div>
 		
