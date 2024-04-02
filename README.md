@@ -1,2 +1,2 @@
-# Prime MOVIES
+# Prime Movies
 
