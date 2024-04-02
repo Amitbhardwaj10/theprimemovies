@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="assets/global.css" />
+		<link rel="stylesheet" href="assets/responsive.css" />
+		<link rel="stylesheet" href="assets/aniamtions.css" />
+		<link
+			rel="shortcut icon"
+			href="/assets/Images/Favicon/favicon.ico"
+			type="image/x-icon"
+		/>
+		<title>Prime Movies - Watch Free Movies & TV shows In HD</title>
+	</head>
+
+	<body  class="bg_black">
+
+		<header>
+			<nav>
+				<div class="left-nav">
+					<svg
+						id="menuIcon"
+						class="active"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+					>
+						<path
+							fill="currentColor"
+							d="M4 18q-.425 0-.713-.288T3 17q0-.425.288-.713T4 16h16q.425 0 .713.288T21 17q0 .425-.288.713T20 18H4Zm0-5q-.425 0-.713-.288T3 12q0-.425.288-.713T4 11h16q.425 0 .713.288T21 12q0 .425-.288.713T20 13H4Zm0-5q-.425 0-.713-.288T3 7q0-.425.288-.713T4 6h16q.425 0 .713.288T21 7q0 .425-.288.713T20 8H4Z"
+						/>
+					</svg>
+					<div class="logo">
+						<a href="./index.html" class="logo-text">Prime Movies</a>
+					</div>
+
+					<ul id="menuContainer">
+						<svg
+							id="menuClose"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+						>
+							<path
+								fill="currentColor"
+								d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6L6.4 19Z"
+							/>
+						</svg>
+
+						<div class="logo">
+							<a href="./index.html" class="logo-text">Prime Movies</a>
+						</div>
+
+						<li><a href="./index.html" class="nav-links">Home</a></li>
+						<li class="genre-li">
+							<a href="#" class="nav-links"
+								>Genre
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="22"
+									height="22"
+									viewBox="0 0 24 24"
+								>
+									<path
+										fill="currentColor"
+										d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z"
+									/>
+								</svg>
+							</a>
+							<div class="genre-div">
+								<ul class="genres-container" id="genreContainer"></ul>
+							</div>
+						</li>
+
+						<li><a href="./movies.html" class="nav-links">Movies</a></li>
+						<li><a href="./tv.html" class="nav-links">TV shows</a></li>
+					</ul>
+				</div>
+
+				<div class="right-nav">
+					<div class="search-icon-div">
+						<svg
+							id="searchIcon"
+							xmlns="http://www.w3.org/2000/svg"
+							width="26"
+							height="26"
+							viewBox="0 0 24 24"
+						>
+							<path
+								fill="#ffffff"
+								d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0c.41-.41.41-1.08 0-1.49zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14"
+							/>
+						</svg>
+					</div>
+
+					<div class="user-div">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="26"
+							height="26"
+							viewBox="0 0 24 24"
+						>
+							<path
+								fill="#ffffff"
+								d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6m0 14c-2.03 0-4.43-.82-6.14-2.88a9.947 9.947 0 0 1 12.28 0C16.43 19.18 14.03 20 12 20"
+							/>
+						</svg>
+					</div>
+				</div>
+
+				<div class="search-div" id="searchDiv">
+					<form action="" id="formTag">
+						<svg
+							class="search-svg"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+						>
+							<path
+								fill="#ffffff"
+								d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0c.41-.41.41-1.08 0-1.49zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14"
+							/>
+						</svg>
+						<input
+							autocomplete="off"
+							type="search"
+							id="searchInput"
+							placeholder="Search Movies, Tv Shows and more..."
+						/>
+					</form>
+					<h2 id="searchResultHeading"></h2>
+					<svg
+						id="searchCloseIcon"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+					>
+						<path
+							fill="currentColor"
+							d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275q-.275-.275-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275L12 13.4Z"
+						/>
+					</svg>
+
+					<div id="searchMedia"></div>
+				</div>
+			</nav>
+		</header>
+
+		<main>
+			<section class="login-section">
+				<div class="login-container">
+					<form action="#" class="login-form">
+						<div class="logo">
+							<a href="./index.html" class="logo-text">Prime Movies</a>
+						</div>
+
+						<div>
+							<label>Username or Email Address</label>
+							<input
+								type="email"
+								name="Username"
+								id="usernameInp"
+								autocomplete="off"
+							/>
+						</div>
+
+						<div  class="pass-div">
+							<label>Password</label>
+							<input
+								type="password"
+								name="Password"
+								id="passInp"
+								autocomplete="off"
+							/>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								id="pass-show"
+								width="22"
+								height="22"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-eye"
+							>
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+								<circle cx="12" cy="12" r="3" />
+							</svg>
+
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								id="pass-hide"
+								width="22"
+								height="22"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="feather feather-eye-off"
+							>
+								<path
+									d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+								/>
+								<line x1="1" y1="1" x2="23" y2="23" />
+							</svg>
+						</div>
+
+						<div>
+							<a href="#">Forgot Password?</a>
+						</div>
+
+						<label class="remember-checkbox">
+							<input type="checkbox" />Remember Me
+						</label>
+
+						<button>Log In</button>
+
+						<p>
+							New to Prime Movies?
+							<a href="./signup.html"> Register</a>
+						</p>
+					</form>
+				</div>
+			</section>
+		</main>
+
+		<script src="script.js"></script>
+	</body>
+</html>

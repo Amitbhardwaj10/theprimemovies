@@ -1,0 +1,166 @@
+@media only screen and (max-width: 1330px) {
+	:root {
+		font-size: 58.5%;
+	}
+}
+
+@media only screen and (max-width: 930px) {
+	:root {
+		font-size: 58.5%;
+	}
+
+	.hero-text-container {
+		width: 70%;
+	}
+
+	.hero-text-container .signin-btn {
+		padding: 1.5rem 2.5rem;
+	}
+
+	.hero-text-container button a {
+		font-size: 1.8rem;
+	}
+}
+
+@media screen and (max-width: 730px) {
+	.hero-text-container {
+		width: 75%;
+	}
+
+	.login-container {
+		width: 100%;
+	}
+
+	.signup-container {
+		width: 100%;
+		padding: 4rem 2rem;
+	}
+
+	.signup-form > div .col {
+		width: 100%;
+		padding: 0;
+	}
+
+	.signup-btn-div .full-button {
+		width: 100%;
+	}
+
+	.signup-form h4 {
+		margin-bottom: 0;
+	}
+
+}
+
+@media screen and (max-width: 650px) {
+	:root {
+		font-size: 50%;
+	}
+
+	header {
+		position: sticky;
+		top: 0%;
+	}
+
+	nav {
+		padding: 0 2rem;
+	}
+
+	#menuContainer {
+		flex-direction: column;
+		position: absolute;
+		top: 0%;
+		left: 0%;
+		height: 100vh;
+		width: 20rem;
+		background-color: var(--primary-red);
+		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+		border-radius: 0.3rem;
+		transition: all 0.5s ease;
+		transform: translateX(-100%);
+		margin: 0;
+		gap: 0;
+		padding-top: 7rem;
+	}
+
+	#menuContainer .logo {
+		margin-bottom: 1rem;
+	}
+
+	nav ul li {
+		width: 100%;
+		padding: 1rem;
+		line-height: 3;
+	}
+	
+	nav ul li:hover {
+		background-color: var(--secondary-bg);
+	}
+
+	nav ul .genre-li:hover {
+		background-color: unset;
+	}
+
+	#menuIcon {
+		display: block;
+	}
+
+	.icon-scroll {
+		opacity: 0;
+	}
+
+	.search-div {
+		padding: 0.5rem 2rem;
+	}
+
+	.genre-div {
+		position: static;
+		z-index: 99;
+		width: 100%;
+		height: 35rem;
+		overflow-y: scroll;
+	}
+
+	.genre-div::-webkit-scrollbar {
+		width: 0.5rem;
+		background-color: var(--light-bg);
+		border-radius: 50px;
+	}
+
+	.genre-div::-webkit-scrollbar-thumb {
+		background-color: var(--text-hover);
+	}
+
+	.genre-div ul {
+		justify-content: center;
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.genre-div ul li {
+		width: 100%;
+	}
+
+	.genre-div ul li a {
+		padding: 0rem;
+	}
+
+	.movie-info {
+		width: 100%;
+	}
+
+	.movie-side-info {
+		width: 100%;
+		padding: 3rem;
+	}
+
+	.media-details-section {
+		flex-direction: column;
+		
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.hero-text-container {
+		width: 100%;
+	}
+}
