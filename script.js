@@ -11,12 +11,11 @@ const formTag = document.getElementById("formTag");
 const searchResultHeading = document.getElementById("searchResultHeading");
 const genreContainer = document.getElementById("genreContainer");
 const SEARCH_URL = `${BASE_URL}/search/multi?api_key=${API_KEY}`;
-const getApiUrl = (category) =>
-`${BASE_URL}/${category}?language=en-US&api_key=${API_KEY}`;
 const urlParams = new URLSearchParams(window.location.search);
-const genreId = urlParams.get('id');
-const movieId = urlParams.get('movieId');
-const MOVIE_DETAIL_URL = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos,casts`;
+const genreId = urlParams.get("id");
+const movieId = urlParams.get("movieId");
+const getApiUrl = (category) =>
+	`${BASE_URL}/${category}?language=en-US&api_key=${API_KEY}`;
 const genres = [
 	{
 		id: 28,
@@ -111,9 +110,6 @@ const allTvShows = document.getElementById("allTvShows");
 const overlay = document.querySelector(".overlay");
 const mediaDetailsSection = document.getElementById("mediaDetailsSection");
 const trailerSection = document.getElementById("trailerSection");
-
-
-
 // This function is used to fetch the media from the API. And also shows the media.
 const fetchAndShowMedia = async (url, container) => {
 	const resp = await fetch(url);
@@ -135,11 +131,24 @@ fetchAndShowMedia(getApiUrl("trending/tv/day"), trendingTVShows);
 // This function has implemented to show the media. And this function is  calling inside the fetchAndShowMedia() function.
 const showMedia = async (data, container) => {
 	for (const movie of data) {
-		
-		const { title, original_name, poster_path, release_date, vote_average, first_air_date, id } = movie;
+		const {
+			title,
+			original_name,
+			poster_path,
+			release_date,
+			vote_average,
+			first_air_date,
+			id,
+			media_type
+		} = movie;
 		const video = document.createElement("a");
 		video.setAttribute("id", "videoElem");
 		video.href = `./play.html?movieId=${id}`;
+		video.type = media_type;
+
+		video.addEventListener("click", () => {
+			mediaType = media_type;
+		});
 		const li = video.appendChild(document.createElement("li"));
 		li.classList.add("video");
 		li.innerHTML = `
@@ -149,20 +158,22 @@ const showMedia = async (data, container) => {
         </svg>
       </i>
       <div class="poster-div">
-        <img loading="lazy" id="poster" src="${poster_path ? IMG_URL + poster_path : "assets/Images/image.avif"
-			}" alt="" />
+        <img loading="lazy" id="poster" src="${
+					poster_path ? IMG_URL + poster_path : "assets/Images/image.avif"
+				}" alt="" />
       </div>
       <div class="video-details">
         <div>
           <p id="title">${title ? title : original_name}</p>
         </div>
         <div>
-          <p id="year">${release_date || first_air_date
-				? release_date
-					? release_date.slice(0, 4)
-					: first_air_date.slice(0, 4)
-				: 2017
-			}
+          <p id="year">${
+						release_date || first_air_date
+							? release_date
+								? release_date.slice(0, 4)
+								: first_air_date.slice(0, 4)
+							: 2017
+					}
           </p>
           <span id="rating">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -210,7 +221,6 @@ formTag.addEventListener("keyup", () => {
 
 // Search Result Heading
 searchInput.addEventListener("keyup", (e) => {
-	// console.log(e);
 	if (searchInput.value !== "") {
 		searchResultHeading.innerText = `Search Result for "${searchInput.value}"`;
 		searchResultHeading.style.color = "";
@@ -237,7 +247,6 @@ searchCloseIcon.addEventListener("click", () => {
 	searchResultHeading.innerText = "";
 });
 
-
 // Burger menu
 const BurgerMenu = () => {
 	menuIcon.addEventListener("click", () => {
@@ -259,18 +268,18 @@ BurgerMenu();
 
 // ----------------- All Movies & TV shows page ----------------
 
-
 const findMediaWithGenre = () => {
 	document.querySelectorAll("#genreContainer li a").forEach((genreEl) => {
 		genreEl.addEventListener("click", () => {
-			localStorage.setItem('genreId', genreEl.id);
-			genreEl.setAttribute('href', './movies.html?id='+genreEl.id);
-			});
+			localStorage.setItem("genreId", genreEl.id);
+			genreEl.setAttribute("href", "./movies.html?id=" + genreEl.id);
 		});
+	});
 };
 
 findMediaWithGenre();
 
+// In this function, getting the full details of media
 const fetchAllResults = async (url, container) => {
 	const resp = await fetch(url);
 	const respData = await resp.json();
@@ -280,103 +289,126 @@ const fetchAllResults = async (url, container) => {
 	showMedia(respData.results, container);
 };
 
-if(genreId) {
-	getSelectedGenreDetail(genreId, allMovies)
+if (genreId) {
+	getSelectedGenreDetail(genreId, allMovies);
 } else {
-	fetchAllResults(getApiUrl("/discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc"), allMovies);
-	fetchAllResults(getApiUrl("/discover/tv?include_adult=false&=false&page=1&sort_by=popularity.desc"), allTvShows);
+	fetchAllResults(
+		getApiUrl(
+			"discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc"
+		),
+		allMovies
+	);
+	fetchAllResults(
+		getApiUrl(
+			"discover/tv?include_adult=false&=false&page=1&sort_by=popularity.desc"
+		),
+		allTvShows
+	);
 }
 
 function getSelectedGenreDetail(id, container) {
 	selectedGenre = id;
-	 if (selectedGenre) {
-		 container.innerHTML = "";
-		 fetchAllResults(getApiUrl("/discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc") + `&with_genres=${selectedGenre}`, container);
-		 container.style.height = "unset";
-		 document.querySelector('body').style.overflowY = "unset";
-		 localStorage.clear();
-	 }else {
-		 container.innerHTML = ` <h2>No Result found for "${genreEl.innerText}" genre!</h2>`;
-		 container.style.color = "white"
-		 container.style.height = "100vh";
-		 document.querySelector('body').style.overflowY = "hidden";
-	 }
+	if (selectedGenre) {
+		container.innerHTML = "";
+		fetchAllResults(
+			getApiUrl(
+				"discover/movie?include_adult=false&include_video=false&page=1&sort_by=popularity.desc"
+			) + `&with_genres=${selectedGenre}`,
+			container
+		);
+		container.style.height = "unset";
+		document.querySelector("body").style.overflowY = "unset";
+		localStorage.clear();
+	} else {
+		container.innerHTML = ` <h2>No Result found for "${genreEl.innerText}" genre!</h2>`;
+		container.style.color = "white";
+		container.style.height = "100vh";
+		document.querySelector("body").style.overflowY = "hidden";
+	}
 }
 
 // Login Page -> Password - Show / Hide
 
-hidePassIcon?.addEventListener('click', () => {
-			inputPassword.type = "text";
-			hidePassIcon.style.display = "none";
-			showPassIcon.style.display = "block";
-	})
+hidePassIcon?.addEventListener("click", () => {
+	inputPassword.type = "text";
+	hidePassIcon.style.display = "none";
+	showPassIcon.style.display = "block";
+});
 
-showPassIcon?.addEventListener('click', () => {
-		inputPassword.type = "password";
-		hidePassIcon.style.display = "block";
-		showPassIcon.style.display = "none";
-	
-})
-
-
-// Play.html -> JS
-
-
-// In this function, getting the full details of media
+showPassIcon?.addEventListener("click", () => {
+	inputPassword.type = "password";
+	hidePassIcon.style.display = "block";
+	showPassIcon.style.display = "none";
+});
 
 
 const getGenres = (genrelist, sep = " ") => {
 	const newGenreList = [];
-	for(const {name} of genrelist) {
+	for (const { name } of genrelist) {
 		newGenreList.push(name);
 	}
 	let spanArray = [];
-	newGenreList.forEach(name => {
-		const span = document.createElement('li');
+	newGenreList.forEach((name) => {
+		const span = document.createElement("li");
 		span.innerText = name;
 		spanArray.push(span.outerHTML);
-	})
+	});
 
-		return spanArray.join(sep);
-}
+	return spanArray.join(sep);
+};
 
 const getCasts = (castList) => {
 	const newCastList = [];
-	for(let i = 0; i < castList.length && i< 10; i++) {
-		const {name} = castList[i];
-		newCastList.push(name);
+	for (let i = 0; i < castList.length && i < 10; i++) {
+		const { name } = castList[i];
+		newCastList?.push(name);
 	}
-
-	return newCastList.join(', ');
-}
+	return newCastList.join(", ");
+};
 
 const getDirectors = (crewList) => {
-	const directors = crewList.filter(({job}) => job === "Director");
+	const directors = crewList.filter(({ job }) => job === "Director");
 
 	const directorList = [];
-	for(const {name} of directors) directorList.push(name);
-	
+	for (const { name } of directors) directorList.push(name);
+
 	return directorList.join(", ");
-}
+};
 
 const getProductionCompanies = (productionList) => {
 	const newProductionList = [];
-	for(let i = 0; i < productionList.length && i< 4; i++) {
-		const {name} = productionList[i];
+	for (let i = 0; i < productionList.length && i < 4; i++) {
+		const { name } = productionList[i];
 		newProductionList.push(name);
 	}
 
 	return newProductionList.join(", ");
-}
+};
 
-const getMovieDetails = (async (url) => {
+const movieDetail = async (url) => {
 	const resp = await fetch(url);
-	const respData = await resp.json();	
+	const respData = await resp.json();
+	console.log(respData);
+	const {
+		original_title,
+		original_name,
+		original_language,
+		overview,
+		runtime,
+		release_date,
+		first_air_date,
+		vote_average,
+		poster_path,
+		backdrop_path,
+		videos,
+		genres,
+		production_companies,
+		casts: { cast = [], crew = [] } = {},
+	} = respData;
 
-	const {original_title, original_language, overview, runtime, release_date, vote_average, poster_path, backdrop_path, videos, genres, production_companies, casts: {cast, crew}} = respData;
-	let videoKey = '';
+	let videoKey = "";
 	Array.from(videos.results).forEach((video) => {
-		video.type === 'Trailer' ? videoKey = video.key : "error";
+		video.type === "Trailer" ? (videoKey = video.key) : "error";
 	});
 
 	trailerSection.style.background = `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)), url( https://image.tmdb.org/t/p/original/${backdrop_path})`;
@@ -385,10 +417,10 @@ const getMovieDetails = (async (url) => {
 	trailerSection.innerHTML = `
 		<iframe src="https://www.youtube.com/embed/${videoKey}?&theme=dark&color=white&rel=0" frameborder="0 allowfullscreen="1" loading="lazy"> 
 		</iframe>
-	`
+	`;
 	mediaDetailsSection.innerHTML = `
 	<div class="movie-info" id="movieInfo">
-	<h2>${original_title}</h2>
+	<h2>${original_name ? original_name : original_title}</h2>
 				<div class="inline-items">
 					<span class="rating">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -399,13 +431,15 @@ const getMovieDetails = (async (url) => {
 						</svg>
 						<span>${vote_average.toFixed(1)}</span>
 					</span>
-					<span class="runtime">${runtime} min</span>
-					<span class="year">${release_date.slice(0,4)}</span>
+					<span class="runtime">${runtime ? runtime : 120} min</span>
+					<span class="year">${
+						release_date ? release_date.slice(0, 4) : first_air_date.slice(0, 4)
+					}</span>
 				</div>
 		
 				<div class="genres">${getGenres(genres)}</div>
 		
-				<p class="overview">${overview}</p>
+				<p class="overview">${overview && overview}</p>
 		
 				<div class="details">
 					<span>Subtitle </span>
@@ -448,14 +482,18 @@ const getMovieDetails = (async (url) => {
 				<ul>
 					<li><strong>Initial release: </strong> ${release_date}</li>
 					<li><strong>Directed by:</strong>${getDirectors(crew)}</li>
-					<li><strong>Production:</strong> ${getProductionCompanies(production_companies)}</li>
-					<li><strong>Starring:</strong> ${getCasts(cast)}</li>
+					<li><strong>Production:</strong> ${getProductionCompanies(
+						production_companies
+					)}</li>
+					<li><strong>Starring:</strong> ${cast && getCasts(cast)}</li>
 				</ul>
 				</div>
 		
-		`
-})(MOVIE_DETAIL_URL);
+		`;
+};
 
+const MOVIE_DETAIL_URL = `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=videos,casts`;
 
-
-
+if (movieId) {
+	movieDetail(MOVIE_DETAIL_URL);
+}
