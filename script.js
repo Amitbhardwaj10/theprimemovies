@@ -1,5 +1,5 @@
 // Variables Declaration
-const API_KEY = "7d044af280f94d734e7af2003908f26f";
+const API_KEY = "Enter your api key here";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_URL = "https://image.tmdb.org/t/p/w500/";
 const searchDiv = document.getElementById("searchDiv");
